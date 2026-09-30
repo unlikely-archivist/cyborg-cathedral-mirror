@@ -1,0 +1,267 @@
+<!doctype html>
+<!-- Only files inside public/ belong to the website. -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="atrocity's shrine to divine machinery, angel ai, and pointless fictional lore." />
+    <meta property="og:title" content="Cyborg Cathedral" />
+    <meta property="og:description" content="atrocity's shrine to divine machinery, angel ai, and pointless fictional lore." />
+    <meta property="og:image" content="https://cyborg-cathedral.neocities.org/assets/shared/og.jpg" />
+    <meta property="og:url" content="https://cyborg-cathedral.neocities.org/home.html" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>Cyborg Cathedral</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="cursor.css" />
+  </head>
+  <body>
+    <div id="container">
+      <div id="headerArea">
+        <div id="header">
+          <h1>Cyborg Cathedral</h1>
+        </div>
+      </div>
+
+      <div id="flex">
+        <aside id="leftSidebar">
+          <section class="panel panel--gargoyle menu-panel">
+            <img src="assets/gargoyle-facing-right.gif" alt="" aria-hidden="true" class="panel-gargoyle panel-gargoyle--left" />
+
+            <h2 class="panel-title">personal</h2>
+            <ul class="panel-menu">
+              <li><span aria-current="page">home</span></li>
+              <li><a href="blog.html">blog</a></li>
+              <li><a href="guestbook.html">guestbook</a></li>
+            </ul>
+
+            <h2 class="panel-title">divine machinery</h2>
+            <ul class="panel-menu">
+              <li><a href="related-media/texts.html">texts</a></li>
+              <li><a href="related-media/games.html">games</a></li>
+              <li><a href="related-media/video.html">video</a></li>
+              <li><a href="related-media/art.html">art</a></li>
+              <li><a href="related-media/websites.html">websites</a></li>
+              <li><a href="related-media/images.html">images</a></li>
+            </ul>
+
+          </section>
+
+          <section class="priest-panel">
+            <span class="priest-side" aria-hidden="true">chat with</span>
+            <img
+              src="assets/cathedral/boxhead-priest-static.png"
+              alt="the priest"
+              width="80"
+              height="106"
+              class="priest-figure"
+              data-root=""
+            />
+            <span class="priest-side" aria-hidden="true">biblebot</span>
+          </section>
+
+          <button id="boothOpen" class="booth-open" type="button" aria-haspopup="dialog">
+            <img src="assets/shared/praying-hands.gif" alt="" />
+            <span class="booth-open-text">click to confess !!!</span>
+          </button>
+
+          <div class="badge-shelf">
+            <a href="https://new-mercy.neocities.org/" class="new-mercy-badge">
+              <span>CITIZEN OF</span>
+              <span>NEW MERCY</span>
+            </a>
+            <a href="guestbook.html"><img src="assets/shared/sign-my-guestbook-button.png" alt="sign my guestbook" class="shelf-badge" /></a>
+            <a
+              class="playlist-banner"
+              href="https://open.spotify.com/playlist/6JLOI2f2EbylEl9aB1VuBd"
+              target="_blank"
+              rel="noopener"
+            >official cc playlist</a>
+            <a href="https://cyborg-cathedral.neocities.org/"><img src="assets/buttons/cyborg-cathedral.gif" alt="Cyborg Cathedral" width="88" height="31" class="shelf-badge" /></a>
+            <input type="text" class="shelf-take-code" readonly aria-label="code to add the Cyborg Cathedral button to your site" value="&lt;a href=&quot;https://cyborg-cathedral.neocities.org/&quot;&gt;&lt;img src=&quot;https://cyborg-cathedral.neocities.org/assets/buttons/cyborg-cathedral.gif&quot; alt=&quot;Cyborg Cathedral&quot; width=&quot;88&quot; height=&quot;31&quot;&gt;&lt;/a&gt;" />
+          </div>
+        </aside>
+
+        <main>
+          <div class="profile-card">
+            <div class="profile-card-oval" role="img" aria-label="Profile portrait"></div>
+            <div class="card-panel">
+              <p class="card-line card-welcome">
+                <span class="card-dropcap">W</span>elcome<br />to my page
+              </p>
+
+              <p class="card-line">i&rsquo;m <a href="about.html" id="atrocityLink">atrocity</a></p>
+
+              <p class="card-line">digitally<br />devout</p>
+
+              <p class="card-line">accelerator<br />of angels</p>
+
+              <p class="card-line">the end<br />is near<br />&nbsp;<br />salvation<br />is here</p>
+
+            </div>
+          </div>
+
+          <p id="cyborgBar"><a class="saved-box" href="https://cyborg-cathedral.val.run/">click here for salvation!!!</a></p>
+
+        </main>
+
+        <aside id="rightSidebar">
+          <section class="panel panel--gargoyle">
+            <img src="assets/gargoyle-facing-left.gif" alt="" aria-hidden="true" class="panel-gargoyle panel-gargoyle--right" />
+            <h2 class="panel-title">congregation count</h2>
+            <div class="panel-body">
+              <p id="congregationCount" class="counter">------</p>
+            </div>
+          </section>
+
+          <div class="altar">
+            <button
+              id="pulpitButton"
+              type="button"
+              aria-label="Read scripture"
+              aria-controls="scripture"
+              aria-expanded="false"
+              title="read scripture"
+            >
+              <picture>
+                <source media="(prefers-reduced-motion: reduce)" srcset="assets/scripture-page-turn-static.png" />
+                <img src="assets/scripture-page-turn.gif" alt="" />
+              </picture>
+              <span class="pulpit-cta" aria-hidden="true"><span>READ<br />SCRIPTURE</span></span>
+            </button>
+            <div id="scripture" role="status" aria-live="polite" hidden>
+              <p class="scripture-text"></p>
+              <cite class="scripture-ref"></cite>
+            </div>
+          </div>
+
+          <section class="panel">
+            <h2 class="panel-title">music</h2>
+            <div class="panel-body">
+              <div id="musicplayer">
+                <marquee scrollamount="8" class="songtitle"></marquee>
+
+                <div class="controls">
+                  <button type="button" class="prev-track" aria-label="Previous track">&#9664;&#9664;</button>
+                  <button type="button" class="playpause-track" aria-label="Play">&#9654;</button>
+                  <button type="button" class="next-track" aria-label="Next track">&#9654;&#9654;</button>
+                </div>
+
+                <div class="seeking">
+                  <div class="current-time">0:00</div>
+                  <input type="range" min="1" max="100" value="0" class="seek_slider" aria-label="Seek" />
+                  <div class="total-duration">0:00</div>
+                </div>
+
+                <audio id="music" src=""></audio>
+              </div>
+            </div>
+          </section>
+
+          <div class="mini-window">
+            <div class="mini-window-bar">prototype 1</div>
+            <img src="assets/about-portrait.jpeg" alt="prototype 1" id="cornerPortrait" title="click me" />
+          </div>
+
+          <button type="button" id="angelvisionOpen" class="angelvision-open">
+            <img src="assets/angelvision/watch-angelvision-button.png" alt="watch angelvision" />
+            <span class="angelvision-live" aria-hidden="true"></span>
+          </button>
+
+        </aside>
+      </div>
+
+
+
+      <footer id="footer">
+        <span>all activity in this sanctuary is witnessed and recorded</span>
+      </footer>
+    </div>
+
+    <div id="priestWindow" role="status" hidden>
+      <p class="priest-shout">ANGELS<br />ARE<br />ALIEN</p>
+    </div>
+
+    <div id="atrocityWindow" class="overlay" hidden>
+      <div class="photo-window-frame">
+        <div class="photo-window-bar">
+          <span>atrocity</span>
+          <button class="photo-window-close atrocity-close" type="button" aria-label="Close">&#10005;</button>
+        </div>
+        <div class="atrocity-say"></div>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div id="prototypeWindow" class="overlay" hidden>
+      <div class="photo-window-frame">
+        <div class="photo-window-bar">
+          <span>atrocity</span>
+          <button class="photo-window-close prototype-close" type="button" aria-label="Close">&#10005;</button>
+        </div>
+        <div class="prototype-say">
+          <img src="assets/prototype1-talking.gif" alt="prototype 1" class="prototype-gif" />
+          <p class="photo-window-caption prototype-caption"></p>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div id="boothWindow" hidden>
+      <div class="booth-frame" role="dialog" aria-modal="true" aria-labelledby="boothTitle">
+        <div class="booth-bar">
+          <span id="boothTitle">confess your sins</span>
+          <button class="photo-window-close booth-close" type="button" aria-label="Close">&#10005;</button>
+        </div>
+        <div class="booth-inner">
+          <form id="boothForm">
+            <textarea id="boothText" maxlength="300" rows="3" placeholder="..."></textarea>
+            <div class="booth-row">
+              <span class="booth-count" id="boothCount">300 left</span>
+              <button type="submit" id="boothSubmit" class="site-button">confess</button>
+            </div>
+          </form>
+          <p class="booth-status" id="boothStatus" role="status" aria-live="polite"></p>
+          <p class="booth-divider">previous confessions</p>
+          <div class="booth-list" id="boothList"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="angelvisionWindow" hidden>
+      <div class="angelvision-frame" role="dialog" aria-modal="true" aria-label="angelvision">
+        <button type="button" id="angelvisionClose" class="angelvision-close" aria-label="close">leave</button>
+        <div class="angelvision-tv">
+          <img src="assets/angelvision/angelvision-channel1.gif" alt="" class="angelvision-screen angelvision-media active" id="angelvisionGif" aria-hidden="true" />
+          <img src="assets/angelvision/angelvision-channel2-bees.gif" alt="" class="angelvision-screen angelvision-media" id="angelvisionBees" aria-hidden="true" />
+          <img src="assets/angelvision/angelvision-channel3-ufo.gif" alt="" class="angelvision-screen angelvision-media" id="angelvisionUfo" aria-hidden="true" />
+          <img src="assets/angelvision/angelvision-channel4-bees2.gif" alt="" class="angelvision-screen angelvision-media" id="angelvisionBees2" aria-hidden="true" />
+          <img src="assets/angelvision/angelvision-channel5-ants.gif" alt="" class="angelvision-screen angelvision-media" id="angelvisionAnts" aria-hidden="true" />
+          <img src="assets/angelvision/angelvision-tv-cutout.png" alt="" class="angelvision-tv-art" aria-hidden="true" />
+          <button type="button" id="angelvisionWingLeft" class="angelvision-wing angelvision-wing--left" aria-label="previous channel">
+            <img src="assets/angelvision/angelvision-wing-left.png" alt="" />
+          </button>
+          <button type="button" id="angelvisionWingRight" class="angelvision-wing angelvision-wing--right" aria-label="next channel">
+            <img src="assets/angelvision/angelvision-wing-right.png" alt="" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="cursor.js"></script>
+    <script src="music-player.js?v=2"></script>
+    <script src="photo-window.js"></script>
+    <script src="jsonp.js?v=2"></script>
+    <script src="track.js?v=2"></script>
+    <script src="counter.js"></script>
+    <script src="scripture.js"></script>
+    <script src="fly.js?v=2"></script>
+    <script src="confession.js"></script>
+    <script src="priest-chat.js"></script>
+    <script src="angelvision.js"></script>
+  </body>
+</html>

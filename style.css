@@ -1,0 +1,2018 @@
+/* shared cathedral shell — change these values to retheme every page */
+@font-face {
+  font-family: "Old English Gothic Pixel";
+  src: url("assets/fonts/OldEnglishGothicPixelRegular-ow2Bo.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Unifraktur Maguntia";
+  src: url("assets/fonts/unifraktur-maguntia.ttf") format("truetype");
+}
+
+:root {
+  --site-width: 900px;
+
+  /* ground — the big picture behind everything */
+  --site-board: url("/assets/background/circuit-board-bg.png");
+  --site-wallpaper: url("/assets/shared/greytile01.jpg");
+  --site-banner: url("/assets/shared/cyborg-cathedral-banner.png");
+  --site-cross: url("/assets/shared/cross-silver.gif");
+  --site-board-edge: #1d3a2f;
+
+  /* surface + frames */
+  --site-surface: #d0bd9e;
+  --site-surface-tex: url("assets/shared/parchment-tan.png");
+  --site-frames: #aa9a82;
+
+  /* ink */
+  --site-ink: #1d201b;
+  --site-ink-dim: #4f564e;
+  --site-deep: #081c15;
+
+  /* chrome — red. never on anything clickable. */
+  --site-red: #69010f;
+  --site-red-bevel: linear-gradient(#8a0a1a, #69010f 55%, #4a0009);
+
+  /* action — green. only on things you can click. */
+  --site-link: #1d4631;
+  --site-acid: #6dd626;
+
+  /* window bevel, derived from the surface */
+  --site-bevel-hi: #e8dcc6;
+  --site-bevel-lo: #7a6a55;
+  --site-bevel-hi-soft: #ddd0b7;
+  --site-bevel-lo-soft: #8f7f68;
+
+  /* semantic state — deliberately not the chrome red */
+  --site-ok: #1d4631;
+  --site-ok-bg: #cdd8bc;
+  --site-warn: #6b3410;
+  --site-warn-bg: #cfae94;
+
+  /* incidentals */
+  --site-red-bright: #ff2f2f;
+  --site-steel: #939390;
+  --site-steel-bevel: linear-gradient(#b3b3b0, #939390 60%, #76766f);
+  --site-gold: #b8893b;
+  --site-border: #333;
+  --site-drop: 3px 3px 0 rgba(29, 32, 27, 0.35);
+
+  /* dashed frame around the circuit-board runner */
+  --site-frame-dark: #2b2b2b;
+  --site-frame-dash: #8c8c8c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.skip-link {
+  position: fixed;
+  left: 8px;
+  top: 8px;
+  z-index: 10000;
+  padding: 8px 10px;
+  border: 2px solid var(--site-ink);
+  background: var(--site-surface);
+  color: var(--site-red);
+  font-weight: 700;
+  transform: translateY(-160%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* the gutter is reserved whether or not a page scrolls, so the centred
+   container does not jump sideways as you click between pages */
+html {
+  scrollbar-gutter: stable;
+}
+
+body {
+  margin: 0;
+  color: var(--site-ink);
+  font-family: monospace;
+  background-image: var(--site-wallpaper);
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* secondary layer: a table runner — the board bleeds off the top and bottom
+   of the screen, wallpaper shows only down the left and right */
+#container {
+  position: relative;
+  max-width: var(--site-width);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  /* deeper top padding drops the banner without moving the frame itself;
+     no bottom padding, so the footer stays flush against the dashed edge */
+  padding: 60px 12px 0;
+  /* transparent border + the ::before frame below: a real dashed border
+     re-spaces its dashes to fit each edge, so the sides twitched between
+     pages of different height. this dash pitch is fixed. */
+  border: 6px solid transparent;
+  background:
+    linear-gradient(rgba(12, 32, 24, 0.35), rgba(12, 32, 24, 0.55)),
+    var(--site-board) top left / 368px 496px repeat,
+    var(--site-frame-dark);
+  background-clip: padding-box, padding-box, border-box;
+  box-shadow:
+    inset 2px 0 0 rgba(184, 137, 59, 0.55),
+    inset -2px 0 0 rgba(184, 137, 59, 0.55),
+    inset 0 0 36px rgba(0, 0, 0, 0.6),
+    6px 0 0 rgba(0, 0, 0, 0.35),
+    -6px 0 0 rgba(0, 0, 0, 0.35);
+}
+
+/* the dashed frame, drawn at a fixed 12/12 pitch anchored top-left so it
+   lands identically on every page */
+#container::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(to right, var(--site-frame-dash) 0 12px, transparent 12px 24px) left top / 100% 6px repeat-x,
+    repeating-linear-gradient(to right, var(--site-frame-dash) 0 12px, transparent 12px 24px) left bottom / 100% 6px repeat-x,
+    repeating-linear-gradient(to bottom, var(--site-frame-dash) 0 12px, transparent 12px 24px) left top / 6px 100% repeat-y,
+    repeating-linear-gradient(to bottom, var(--site-frame-dash) 0 12px, transparent 12px 24px) right top / 6px 100% repeat-y;
+}
+
+/* the bottom slab: takes whatever vertical room the page leaves over */
+#cyborgBar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, var(--site-width));
+  margin: 10px auto;
+  white-space: nowrap;
+  line-height: 1.15;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.6);
+  box-shadow: var(--site-drop);
+}
+
+@media only screen and (max-width: 480px) {
+  #cyborgBar {
+    padding: 12px 8px;
+    letter-spacing: 0.02em;
+  }
+}
+
+/* home only, wide viewport: main carries just the card and the bar, which
+   together are shorter than either sidebar. Stretching main to the row's
+   height and centering its contents inside that puts the leftover space
+   evenly above and below instead of all of it sinking to the bottom. */
+@media only screen and (min-width: 801px) {
+  #flex:has(#cyborgBar) {
+    align-items: stretch;
+  }
+
+  #flex:has(#cyborgBar) main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+#headerArea {
+  width: min(100%, var(--site-width));
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#header {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3808 / 320;
+  margin-bottom: 10px;
+  background: var(--site-banner) center / contain no-repeat;
+}
+
+/* On a phone the full 3808px banner shrinks the lettering to nothing, so crop
+   to the framed centre panel - the ornament strips either side are dropped.
+   190.6% is 3808/1998 (the panel's width), which keeps the pixels 1:1 with the
+   uncropped banner at the same container width. */
+@media only screen and (max-width: 600px) {
+  #header {
+    aspect-ratio: 1998 / 320;
+    background-size: 190.6% auto;
+  }
+}
+
+#header h1 {
+  margin: 0;
+  overflow: hidden;
+  color: transparent;
+  font-size: 0;
+}
+
+#flex {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+aside {
+  width: 212px;
+  font-size: 0.85rem;
+}
+
+#leftSidebar {
+  order: 1;
+}
+
+.profile-card {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto 10px;
+  aspect-ratio: 496 / 800;
+  background: url("assets/shared/profile-card-base.png?v=3") center / cover no-repeat;
+  filter: drop-shadow(4px 5px 3px rgba(36, 28, 24, 0.4));
+}
+
+.profile-card-oval {
+  position: absolute;
+  left: 45.36%;
+  top: 10.63%;
+  width: 41.33%;
+  height: 36.25%;
+  background: url("assets/shared/profile-oval-anim.gif?v=5") center / 100% 100% no-repeat;
+}
+
+/* covers the text panel painted into the card art, measured off the artwork */
+.card-panel {
+  position: absolute;
+  left: 15.73%;
+  top: 17.12%;
+  width: 24.8%;
+  height: 66.5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 2% 2px 4%;
+  background: var(--site-surface);
+  color: var(--site-ink);
+  font-family: "Unifraktur Maguntia", Georgia, serif;
+  /* one size for every line; the longest line sets it. blackletter paints
+     wider than its advance width, so "Welcome" and "salvation" were touching
+     the edges of the cream at 21px even though the layout said they fit. */
+  font-size: 18px;
+  line-height: 1.02;
+  text-align: center;
+}
+
+.card-line {
+  margin: 0;
+}
+
+/* a flourish under every block but the last, so the closing couplet stays a
+   pair rather than being cut in half by one */
+.card-line:not(:last-child) {
+  padding-bottom: 26px;
+  background: url("assets/shared/card-flourish.png") bottom center / 92% auto no-repeat;
+}
+
+.card-welcome {
+  font-size: 19px;
+}
+
+.card-gap {
+  display: block;
+  height: 0.75em;
+}
+
+.card-dropcap {
+  font-size: 1.9em;
+  line-height: 0.75;
+}
+
+/* The name on the card is one word of blackletter - about 53 by 19 on a phone,
+   under the 44px a thumb needs. The hit area is grown with a pseudo-element so
+   the painted text panel is not relaid out to make room for it. */
+@media only screen and (max-width: 800px) {
+  #atrocityLink {
+    position: relative;
+  }
+
+  #atrocityLink::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -8px;
+    left: -8px;
+    height: 44px;
+    transform: translateY(-50%);
+  }
+}
+
+#flex main {
+  flex: 1;
+  order: 2;
+  min-width: 0;
+}
+
+#rightSidebar {
+  order: 3;
+}
+
+/* ===== links =====
+   one rule governs every link on the site. rest is green on parchment;
+   hover/focus inverts to a filled bar with an acid edge, so the state
+   change is a change of FORM, not just more green. */
+a,
+.panel-menu a,
+.card-panel a {
+  color: var(--site-link);
+  text-underline-offset: 2px;
+}
+
+a:hover,
+a:focus-visible {
+  background: var(--site-acid);
+  color: var(--site-ink);
+  box-shadow: inset 3px 0 0 var(--site-link);
+  outline: none;
+}
+
+.box {
+  padding: 0.6rem;
+  margin: 0.5rem 0;
+  border: 1px solid var(--site-frames);
+  background: var(--site-surface);
+}
+
+#musicplayer {
+  background: var(--site-surface);
+  border: 2px solid var(--site-red);
+  box-shadow: var(--site-drop);
+}
+
+.songtitle {
+  display: block;
+  padding: 5px;
+  border-bottom: 2px solid var(--site-frames);
+  background: #e2ded4;
+  color: var(--site-ink);
+}
+
+.controls {
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 18px;
+  text-align: center;
+  background: var(--site-steel-bevel);
+}
+
+.controls button {
+  padding: 6px 5px;
+  border: none;
+  font: inherit;
+  background: none;
+  color: var(--site-deep);
+  cursor: help;
+}
+
+.controls button:hover {
+  color: var(--site-link);
+}
+
+.seeking {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 5px;
+  background: var(--site-steel-bevel);
+  color: var(--site-deep);
+}
+
+.current-time {
+  padding-right: 5px;
+}
+
+.total-duration {
+  padding-left: 5px;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  background: var(--site-steel);
+}
+
+input[type="range"]:focus {
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 2px;
+  cursor: help;
+  background: var(--site-link);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  margin-top: -4.5px;
+  border-radius: 0;
+  background: var(--site-link);
+  cursor: help;
+}
+
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 2px;
+  cursor: help;
+  background: var(--site-link);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border: none;
+  border-radius: 0;
+  background: var(--site-link);
+  cursor: help;
+}
+
+footer {
+  position: relative;
+  width: 100%;
+  margin-top: auto;
+  padding: 0.6rem;
+  border: 1px solid var(--site-border);
+  border-top: 2px solid var(--site-gold);
+  background: var(--site-red-bevel);
+  color: var(--site-surface);
+  text-align: center;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.45);
+  box-shadow: var(--site-drop);
+}
+
+@media only screen and (max-width: 800px) {
+  #flex {
+    flex-wrap: wrap;
+  }
+
+  aside {
+    width: 100%;
+  }
+
+  #flex main {
+    order: 1;
+  }
+
+  #leftSidebar {
+    order: 2;
+  }
+
+  #rightSidebar {
+    order: 3;
+  }
+
+  /* home only: talk to GOD is the last thing on the page, under the stamps.
+     main carries no box of its own, so it can be dissolved and its children
+     ordered alongside the sidebars. */
+  #flex main:has(#cyborgBar) {
+    display: contents;
+  }
+
+  #flex .profile-card {
+    order: 1;
+    flex: 0 0 100%;
+  }
+
+  #flex #cyborgBar {
+    order: 4;
+    flex: 0 0 100%;
+  }
+}
+
+/* home only, stacked widths: one column, in the order she asked for -
+   card, count, the priest, scripture, music, prototype 1, confess, talk to
+   GOD, then the menu and the buttons. Both asides are dissolved so their
+   children can be interleaved; the stamp shelf sits at the tail. */
+@media only screen and (max-width: 800px) {
+  #flex:has(#cyborgBar) > aside {
+    display: contents;
+  }
+
+  #flex:has(#cyborgBar) > aside > *,
+  #flex:has(#cyborgBar) > main > * {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+
+  #flex:has(#cyborgBar) .profile-card {
+    order: 1;
+  }
+
+  #flex:has(#cyborgBar) #rightSidebar .panel--gargoyle {
+    order: 2;
+  }
+
+  #flex:has(#cyborgBar) .priest-panel {
+    order: 3;
+  }
+
+  #flex:has(#cyborgBar) .altar {
+    order: 4;
+  }
+
+  #flex:has(#cyborgBar) #rightSidebar .panel:not(.panel--gargoyle) {
+    order: 5;
+  }
+
+  #flex:has(#cyborgBar) .mini-window {
+    order: 6;
+  }
+
+  /* stacked layout sweeps every direct child of the sidebar to full width
+     and default order - this one keeps its own size and sits right after
+     the mini-window, same order so DOM position settles the tie */
+  #flex:has(#cyborgBar) .angelvision-open {
+    order: 6;
+    flex: 0 0 auto;
+    width: 140px;
+  }
+
+  #flex:has(#cyborgBar) #boothOpen {
+    order: 7;
+  }
+
+  #flex:has(#cyborgBar) #cyborgBar {
+    order: 8;
+  }
+
+
+  #flex:has(#cyborgBar) .menu-panel {
+    order: 9;
+  }
+
+  #flex:has(#cyborgBar) .stamp-shelf {
+    order: 10;
+  }
+
+  /* the buttons sit in one centred row and the playlist banner, on its own
+     full-width line, is the last thing above the footer */
+  #flex:has(#cyborgBar) .badge-shelf {
+    order: 11;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* stacked, the priest gets the full column - the 80px phone figure is far
+     too small for the thing you are meant to talk to */
+  #flex:has(#cyborgBar) .priest-figure {
+    width: min(250px, 65vw);
+    height: auto;
+    aspect-ratio: 160 / 212;
+  }
+
+  #flex:has(#cyborgBar) #cyborgBar {
+    font-size: clamp(1.1rem, 7vw, 2.3rem);
+  }
+
+  /* stacked, the footer runs the full width of the board, through the
+     container's side padding */
+  #container > footer {
+    width: calc(100% + 24px);
+    margin-right: -12px;
+    margin-left: -12px;
+  }
+}
+
+
+/* every full-screen window carries .overlay; do not go back to listing ids,
+   a window left off the list renders at the bottom of the page instead */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.photo-window-frame {
+  width: min(700px, 90vw);
+  max-height: 85vh;
+  overflow: auto;
+  border: 2px solid;
+  border-color: var(--site-bevel-hi) var(--site-bevel-lo) var(--site-bevel-lo) var(--site-bevel-hi);
+  background: var(--site-surface-tex) repeat;
+  box-shadow:
+    inset 1px 1px 0 var(--site-bevel-hi-soft),
+    inset -1px -1px 0 var(--site-bevel-lo-soft),
+    6px 6px 0 rgba(0, 0, 0, 0.45);
+}
+
+.photo-window-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2px;
+  padding: 2px 3px 2px 6px;
+  border-bottom: 1px solid var(--site-gold);
+  background: var(--site-red-bevel);
+  color: var(--site-bevel-hi-soft);
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.45);
+  font-family: "Old English Gothic Pixel", Georgia, serif;
+  font-size: 18px;
+}
+
+.photo-window-close {
+  width: 20px;
+  height: 18px;
+  padding: 0;
+  border: 2px solid;
+  border-color: var(--site-bevel-hi) var(--site-bevel-lo) var(--site-bevel-lo) var(--site-bevel-hi);
+  background: var(--site-frames) url("assets/shared/close-x.png") center no-repeat;
+  background-size: 8px 7px;
+  image-rendering: pixelated;
+  font-size: 0;
+  cursor: pointer;
+}
+
+.photo-window-close:active {
+  border-color: var(--site-bevel-lo) var(--site-bevel-hi) var(--site-bevel-hi) var(--site-bevel-lo);
+}
+
+.photo-window-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  padding: 8px;
+}
+
+.photo-window-grid img {
+  width: 100%;
+  border: 2px solid;
+  border-color: var(--site-bevel-lo) var(--site-bevel-hi) var(--site-bevel-hi) var(--site-bevel-lo);
+  cursor: pointer;
+}
+
+.photo-window-grid img.selected {
+  border-color: var(--site-acid);
+}
+
+.overlay[hidden],
+#priestWindow[hidden] {
+  display: none;
+}
+
+.photo-window-caption {
+  margin: 0;
+  min-height: 1.2em;
+  padding: 0 10px 12px;
+  color: var(--site-ink-dim);
+  font-family: monospace;
+  text-align: center;
+}
+
+.photo-window-bio {
+  padding: 10px 12px 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  line-height: 1.35;
+}
+
+.photo-window-bio p {
+  margin: 0 0 0.5em;
+}
+
+/* every piece of content on the site is one of these */
+.panel {
+  margin-bottom: 10px;
+  border: 2px solid;
+  border-color: var(--site-bevel-hi) var(--site-bevel-lo) var(--site-bevel-lo) var(--site-bevel-hi);
+  background: var(--site-surface-tex) repeat;
+  box-shadow:
+    inset 1px 1px 0 var(--site-bevel-hi-soft),
+    inset -1px -1px 0 var(--site-bevel-lo-soft),
+    var(--site-drop);
+  color: var(--site-ink);
+}
+
+.panel--gargoyle {
+  position: relative;
+}
+
+/* perched on the panel's outer top corner, overhanging it like a cornice beast */
+.panel-gargoyle {
+  position: absolute;
+  top: -80px;
+  width: 80px;
+  height: auto;
+  pointer-events: none;
+}
+
+/* the two gifs are a mirrored pair, so each corner gets the one facing inward */
+.panel-gargoyle--left {
+  left: -44px;
+}
+
+.panel-gargoyle--right {
+  right: -44px;
+}
+
+/* sidebars go full width on mobile, so the perches move inside the edge */
+@media only screen and (max-width: 800px) {
+  .panel-gargoyle {
+    top: -88px;
+  }
+
+  .panel-gargoyle--left {
+    left: 0;
+  }
+
+  .panel-gargoyle--right {
+    right: 0;
+  }
+}
+
+.panel-title {
+  margin: 2px;
+  padding: 3px 8px;
+  border-bottom: 1px solid var(--site-gold);
+  background: var(--site-red-bevel);
+  color: var(--site-bevel-hi-soft);
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.45);
+  font-family: "Old English Gothic Pixel", Georgia, serif;
+  font-size: 18px;
+  font-weight: normal;
+  line-height: 1.2;
+  text-align: left;
+}
+
+
+
+.panel-body {
+  padding: 6px 9px 9px;
+}
+
+.panel-body p {
+  margin: 0 0 0.6em;
+}
+
+.panel-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* standard navigation for every page below the homepage */
+.panel-menu span[aria-current] {
+  display: block;
+  padding: 4px 2px;
+  opacity: 0.6;
+}
+
+.panel-menu {
+  margin: 0;
+  padding: 3px 9px 4px;
+  list-style: none;
+}
+
+.panel-menu li {
+  padding-bottom: 0;
+}
+
+.panel-menu li:last-child {
+  padding-bottom: 0;
+}
+
+.panel-menu a {
+  display: block;
+  padding: 3px 2px;
+  text-decoration: none;
+}
+
+.panel-menu summary {
+  display: block;
+  padding: 4px 2px;
+  color: var(--site-link);
+  cursor: pointer;
+  list-style: none;
+}
+
+.panel-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.panel-menu summary::before {
+  content: "▸ ";
+}
+
+.panel-menu details[open] > summary::before {
+  content: "▾ ";
+}
+
+.panel-menu summary:hover,
+.panel-menu summary:focus-visible {
+  background: var(--site-acid);
+  color: var(--site-ink);
+  box-shadow: inset 3px 0 0 var(--site-link);
+  outline: none;
+}
+
+/* the menu is one window with the three groups sectioned inside it, so each
+   nameplate after the first needs its own air */
+.menu-panel .panel-menu + .panel-title {
+  margin-top: 10px;
+}
+
+.menu-panel .panel-menu:last-child {
+  padding-bottom: 8px;
+}
+
+/* menu windows run inverted - dark plate under a pale nameplate - so the
+   navigation reads as a different kind of window than the content panels. */
+#leftSidebar .panel:has(.panel-menu) {
+  background: var(--site-deep);
+  border-color: var(--site-bevel-lo) var(--site-bevel-hi) var(--site-bevel-hi) var(--site-bevel-lo);
+  box-shadow:
+    inset 1px 1px 0 rgba(0, 0, 0, 0.6),
+    inset -1px -1px 0 var(--site-bevel-lo-soft),
+    var(--site-drop);
+  color: var(--site-bevel-hi);
+}
+
+#leftSidebar .panel:has(.panel-menu) .panel-title {
+  background: var(--site-surface-tex) repeat;
+  color: var(--site-red);
+  text-shadow: none;
+}
+
+#leftSidebar .panel:has(.panel-menu) .panel-menu a {
+  color: var(--site-acid);
+}
+
+#leftSidebar .panel:has(.panel-menu) .panel-menu a:hover,
+#leftSidebar .panel:has(.panel-menu) .panel-menu a:focus-visible {
+  background: var(--site-acid);
+  color: var(--site-deep);
+}
+
+.menu-submenu {
+  margin: 2px 0 0 14px;
+  padding: 0;
+  list-style: none;
+}
+
+.menu-submenu li {
+  padding-bottom: 4px;
+}
+
+.menu-submenu li:last-child {
+  padding-bottom: 0;
+}
+
+.menu-submenu a {
+  display: block;
+  padding: 3px 2px;
+  text-decoration: none;
+}
+
+.mini-window {
+  margin-top: 10px;
+  border: 2px solid;
+  border-color: var(--site-bevel-hi) var(--site-bevel-lo) var(--site-bevel-lo) var(--site-bevel-hi);
+  background: var(--site-surface-tex) repeat;
+  box-shadow:
+    inset 1px 1px 0 var(--site-bevel-hi-soft),
+    inset -1px -1px 0 var(--site-bevel-lo-soft),
+    4px 4px 0 rgba(0, 0, 0, 0.45);
+}
+
+.mini-window-bar {
+  margin: 2px;
+  padding: 2px 6px;
+  border-bottom: 1px solid var(--site-gold);
+  background: var(--site-red-bevel);
+  color: var(--site-bevel-hi-soft);
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.45);
+  font-family: "Old English Gothic Pixel", Georgia, serif;
+  font-size: 16px;
+}
+
+#cornerPortrait {
+  cursor: pointer;
+  display: block;
+  width: calc(100% - 8px);
+  margin: 2px 4px 4px;
+  transform: scaleX(-1);
+}
+
+.angelvision-open {
+  position: relative;
+  display: block;
+  margin: 8px auto 14px;
+  width: 140px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.angelvision-open img {
+  display: block;
+  width: 100%;
+}
+
+/* a little "this is live" tell - green, blinking, top-right of the button */
+.angelvision-live {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #3ff23f;
+  box-shadow: 0 0 4px 1px rgba(63, 242, 63, 0.85);
+  animation: angelvisionBlink 1.4s steps(1) infinite;
+}
+
+@keyframes angelvisionBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.badge-shelf {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 14px 0;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+/* the christmeat badge is square, so the two beside it space themselves out to
+   match its height and the shelf keeps its two-across rhythm */
+.badge-stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 88px;
+}
+
+.shelf-badge {
+  width: 88px;
+  height: auto;
+  border: 2px outset #ffffff;
+}
+
+.shelf-badge--square {
+  height: 88px;
+}
+
+.shelf-take-code {
+  flex: none;
+  box-sizing: border-box;
+  width: 88px;
+  height: 31px;
+  font-family: monospace;
+  font-size: 10px;
+}
+
+.new-mercy-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 31px;
+  background-color: #c0c0c0;
+  border: 2px outset #ffffff;
+  color: #000080;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 9px;
+  font-weight: bold;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* ---------- buttons ---------- */
+/* same face as the tool pages: filled = the action this panel exists for. */
+.site-button {
+  padding: 6px 10px;
+  border: 1px solid var(--site-ink);
+  background: var(--site-red);
+  color: var(--site-surface);
+  font-family: monospace;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--site-steel);
+}
+
+.site-button:hover,
+.site-button:focus-visible {
+  background: var(--site-surface);
+  color: var(--site-red);
+  outline: 2px solid var(--site-red);
+  outline-offset: 1px;
+}
+
+.site-button:active {
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+
+/* long skinny playlist bar, last item on the badge shelf. a badge, not chrome —
+   silver and clickable like the new mercy badge, so the red/green rule holds.
+   24px is the floor: AGENTS.md requires 24px minimum on interactive targets. */
+.playlist-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-basis: 100%;
+  height: 24px;
+  border: 2px solid;
+  border-color: var(--site-bevel-lo) var(--site-bevel-hi) var(--site-bevel-hi) var(--site-bevel-lo);
+  background: radial-gradient(ellipse at 50% 40%, #16241d, var(--site-deep));
+  color: var(--site-acid);
+  font-family: monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-shadow: 0 0 6px rgba(109, 214, 38, 0.65);
+}
+
+.playlist-banner:hover,
+.playlist-banner:focus-visible {
+  background: var(--site-acid);
+  color: var(--site-deep);
+  outline: none;
+  text-shadow: none;
+}
+
+.playlist-banner:active {
+  border-color: var(--site-bevel-hi) var(--site-bevel-lo) var(--site-bevel-lo) var(--site-bevel-hi);
+}
+
+.new-mercy-badge:hover,
+.new-mercy-badge:focus-visible {
+  border-style: inset;
+}
+
+.new-mercy-badge:focus-visible {
+  outline: 2px solid #000080;
+  outline-offset: 2px;
+}
+
+.counter {
+  margin: 0;
+  padding: 4px 0;
+  border: 2px solid;
+  border-color: var(--site-bevel-lo) var(--site-bevel-hi) var(--site-bevel-hi) var(--site-bevel-lo);
+  background: radial-gradient(ellipse at 50% 40%, #16241d, var(--site-deep));
+  color: var(--site-acid);
+  font-family: monospace;
+  font-size: 20px;
+  letter-spacing: 3px;
+  text-align: center;
+  text-shadow: 0 0 6px rgba(109, 214, 38, 0.65);
+}
+
+.fly {
+  position: fixed;
+  z-index: 200;
+  width: 14px;
+  height: 14px;
+  cursor: crosshair;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fly {
+    display: none;
+  }
+}
+
+/* the pulpit: click the gif, scripture lands on top of it */
+.altar {
+  position: relative;
+  margin-bottom: 10px;
+  border: 2px dashed var(--site-gold);
+  background: radial-gradient(ellipse at 50% 30%, #a8271c, #6d140d);
+  text-align: center;
+  box-shadow: var(--site-drop);
+}
+
+#pulpitButton {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 4px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+#pulpitButton img {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.pulpit-cta {
+  position: absolute;
+  inset: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.pulpit-cta span {
+  color: var(--site-red-bright);
+  font-family: "Courier New", monospace;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.05;
+  text-align: center;
+  text-shadow:
+    0 0 6px #000,
+    1px 1px 0 #000,
+    -1px -1px 0 #000;
+}
+
+#pulpitButton[aria-expanded="true"] .pulpit-cta {
+  opacity: 0;
+}
+
+#pulpitButton:focus-visible {
+  outline: 2px solid var(--site-acid);
+  outline-offset: -2px;
+}
+
+/* sits over the gif, but grows past it rather than clipping a long verse */
+#scripture {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8px 9px;
+  border: 2px solid var(--site-red);
+  background: rgba(243, 235, 224, 0.97);
+  box-shadow:
+    inset 0 0 0 1px var(--site-gold),
+    3px 3px 0 rgba(36, 28, 24, 0.35);
+}
+
+#scripture[hidden] {
+  display: none;
+}
+
+.scripture-text {
+  margin: 0 0 0.5em;
+  color: var(--site-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.scripture-ref {
+  display: block;
+  margin-bottom: 0;
+  color: var(--site-red);
+  font-family: monospace;
+  font-size: 0.7rem;
+  font-style: normal;
+  letter-spacing: 1px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* ---- confession booth ---- */
+
+/* the praying hands open the booth. dashed gold, the same frame the altar
+   wears, because they are the two things on the page that ask something of you */
+.booth-open {
+  position: relative;
+  display: block;
+  width: 70%;
+  margin: 14px auto;
+  padding: 29.5px 4px;
+  border: 2px dashed var(--site-gold);
+  background: radial-gradient(ellipse at 50% 30%, #a8271c, #6d140d);
+  box-shadow: var(--site-drop);
+  cursor: pointer;
+  line-height: 0;
+}
+
+.booth-open img {
+  display: block;
+  width: 64px;
+  height: 98px;
+  margin: 0 auto;
+  image-rendering: pixelated;
+}
+
+.booth-open-text {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 7px;
+  color: var(--site-acid);
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  font-weight: bold;
+  line-height: 1.1;
+  text-align: center;
+  text-shadow:
+    1px 1px 0 #000000,
+    -1px -1px 0 #000000,
+    1px -1px 0 #000000,
+    -1px 1px 0 #000000;
+  animation: booth-blink 1s steps(1, end) infinite;
+}
+
+@keyframes booth-blink {
+  50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .booth-open-text {
+    animation: none;
+  }
+}
+
+/* the quiet one. a plain white box next to all that shouting, and the only
+   link on the page that matters. */
+.saved-box {
+  display: block;
+  min-width: 200px;
+  margin: 0;
+  padding: 10px 8px;
+  border: 1px solid #7a7a72;
+  background: #ffffff;
+  color: #000000;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.saved-box:visited {
+  color: #000000;
+}
+
+}
+
+.booth-open:active {
+  border-style: dotted;
+}
+
+/* deliberately not a boxed dialog - just the winged TV art floating over a
+   dimmed page, with the screen cut out so whatever plays sits inside it */
+#angelvisionWindow {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+#angelvisionWindow[hidden] {
+  display: none;
+}
+
+.angelvision-frame {
+  position: relative;
+  width: min(720px, 92vw);
+}
+
+.angelvision-close {
+  position: absolute;
+  top: 42%;
+  right: 28%;
+  z-index: 3;
+  padding: 4px 10px;
+  border: 2px outset #ffffff;
+  background: #000000;
+  color: var(--site-acid);
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.angelvision-close:hover {
+  color: #fff;
+}
+
+.angelvision-tv {
+  position: relative;
+  width: 100%;
+}
+
+.angelvision-tv-art {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  pointer-events: none;
+}
+
+/* positioned to match the cutout in angelvision-tv-cutout.png (a 500x500
+   image whose screen hole sits at 32.8%/48.2% with a 34.8%/25.2% size) */
+.angelvision-screen {
+  position: absolute;
+  left: 32.8%;
+  top: 48.2%;
+  width: 34.8%;
+  height: 25.2%;
+  z-index: 0;
+  background: #000;
+  object-fit: cover;
+}
+
+.angelvision-media {
+  display: none;
+}
+
+.angelvision-media.active {
+  display: block;
+}
+
+/* the wings are full-canvas cutouts (same 500x500 frame as the base art) so
+   they line up exactly with the wings baked into it - clip-path both hides
+   the empty half and, per spec, keeps it from swallowing clicks meant for
+   the screen or the other wing */
+.angelvision-wing {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.angelvision-wing img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.angelvision-wing--left {
+  clip-path: inset(30% 68% 26% 0);
+  transform-origin: 88% 58%;
+}
+
+.angelvision-wing--right {
+  clip-path: inset(30% 0 26% 68%);
+  transform-origin: 12% 58%;
+}
+
+.angelvision-wing.twitch {
+  animation: wingTwitch 0.4s ease-in-out;
+}
+
+@keyframes wingTwitch {
+  0% { transform: rotate(0deg); }
+  35% { transform: rotate(-4deg); }
+  65% { transform: rotate(1.5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.angelvision-wing--right.twitch {
+  animation-name: wingTwitchRight;
+}
+
+@keyframes wingTwitchRight {
+  0% { transform: rotate(0deg); }
+  35% { transform: rotate(4deg); }
+  65% { transform: rotate(-1.5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+#boothWindow {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#boothWindow[hidden] {
+  display: none;
+}
+
+.booth-frame {
+  width: min(520px, 90vw);
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid;
+  border-color: var(--site-bevel-hi) var(--site-bevel-lo) var(--site-bevel-lo) var(--site-bevel-hi);
+  background: var(--site-surface-tex) repeat;
+  box-shadow:
+    inset 1px 1px 0 var(--site-bevel-hi-soft),
+    inset -1px -1px 0 var(--site-bevel-lo-soft),
+    6px 6px 0 rgba(0, 0, 0, 0.45);
+}
+
+.booth-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2px;
+  padding: 2px 3px 2px 6px;
+  border-bottom: 1px solid var(--site-gold);
+  background: var(--site-red-bevel);
+  color: var(--site-bevel-hi-soft);
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.45);
+  font-family: "Old English Gothic Pixel", Georgia, serif;
+  font-size: 18px;
+}
+
+.booth-inner {
+  overflow: auto;
+  padding: 10px;
+}
+
+.booth-intro {
+  margin: 0 0 6px;
+}
+
+#boothText {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  padding: 4px;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.booth-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.booth-count {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.booth-status:empty {
+  display: none;
+}
+
+.booth-status {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: var(--site-acid);
+}
+
+.booth-divider {
+  margin: 12px 0 8px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--site-gold);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.confession {
+  position: relative;
+  margin-bottom: 8px;
+  padding: 8px 10px;
+}
+
+.confession p {
+  margin: 0;
+  padding-right: 18px;
+}
+
+.confession-delete {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  padding: 1px 4px;
+  border: 1px solid var(--site-link);
+  background: none;
+  color: var(--site-link);
+  font-size: 11px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* ---- guestbook ---- */
+
+.gb-form label {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+.gb-form input,
+.gb-form textarea {
+  width: 100%;
+  max-width: 420px;
+  box-sizing: border-box;
+  padding: 4px;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.gb-form textarea {
+  resize: vertical;
+}
+
+.gb-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 420px;
+  margin-top: 6px;
+}
+
+.gb-count {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.gb-status:empty {
+  display: none;
+}
+
+.gb-status {
+  margin: 8px 0 0;
+  color: var(--site-acid);
+  font-size: 12px;
+}
+
+.gb-entry {
+  position: relative;
+  margin-bottom: 8px;
+  padding: 8px 10px;
+}
+
+.gb-who {
+  margin: 0 0 3px;
+  font-weight: bold;
+}
+
+.gb-date {
+  margin-left: 8px;
+  font-size: 11px;
+  font-weight: normal;
+  opacity: 0.6;
+}
+
+.gb-message {
+  margin: 0;
+  padding-right: 18px;
+}
+
+/* guestbook: take my button - one row per button on offer */
+.take-body {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.take-body + .take-body {
+  margin-top: 8px;
+}
+
+.take-button {
+  image-rendering: pixelated;
+  flex: none;
+}
+
+.take-code {
+  flex: 1 1 200px;
+  min-width: 0;
+  font-family: monospace;
+  font-size: 11px;
+}
+
+.take-maker {
+  margin: 10px 0 0;
+  font-size: 12px;
+}
+
+.take-status {
+  min-width: 52px;
+  color: var(--site-acid);
+  font-size: 12px;
+}
+
+/* stamps: collected, not links. 99x56 is the usual stamp size; wider ones
+   scale to the same height so a shelf of them lines up. */
+.stamp-shelf {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.stamp-shelf img {
+  display: block;
+  width: auto;
+  height: 40px;
+  max-width: 100%;
+}
+
+/* the priest, in the sidebar where the tools used to be. Pixel art, so it is
+   scaled by whole numbers and never smoothed. */
+/* no panel behind him: the black frame is the whole of it */
+.priest-panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  margin-bottom: 6px;
+}
+
+/* "chat with" down one side of him and "biblebot" down the other. vertical-rl
+   sets the line top to bottom on both sides; green because he is the thing you
+   click, and the words are part of the same target. */
+.priest-side {
+  writing-mode: vertical-rl;
+  /* upright, not turned on its side: one letter under the next, the way a
+     sign painted down a doorframe reads */
+  text-orientation: upright;
+  font-family: "Courier New", monospace;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  /* the acid green, not the dark link green: these sit on the circuit board,
+     where #1d4631 disappears entirely */
+  color: var(--site-acid);
+  text-shadow: 1px 1px 0 #000;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* what he says while the cross is not yet green */
+.priest-hint {
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  transform: translateX(-50%);
+  z-index: 5;
+  margin: 0;
+  padding: 4px 7px;
+  border: 2px solid var(--site-ink);
+  background: var(--site-surface);
+  color: var(--site-red);
+  font-family: monospace;
+  font-size: 12px;
+  white-space: nowrap;
+  box-shadow: var(--site-drop);
+}
+
+/* The grey is flattened into the gif and cannot be removed, so it is given a
+   hard edge instead of left looking like a failed cutout. He is mirrored to
+   face the page rather than the edge of the screen. */
+.priest-figure {
+  width: 136px;
+  height: 180px;
+  image-rendering: pixelated;
+  transform: scaleX(-1);
+  border: 3px solid #000;
+}
+
+@media only screen and (max-width: 480px) {
+  .priest-figure {
+    width: 80px;
+    height: 106px;
+  }
+}
+
+/* the cross on his head is dead until you have done something, and he will
+   not speak until it is green */
+.priest-figure--awake {
+  cursor: pointer;
+}
+
+/* What he has to say, once the cross is green: the whole screen, in flashing
+   red, for three seconds. There is no window and nothing to close. */
+#priestWindow {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2vw;
+  /* he shouts over the site, not instead of it - the page stays visible
+     behind him, veiled only enough for the red to hold together */
+  background: rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+
+.priest-shout {
+  margin: 0;
+  color: #ff1010;
+  font-family: "Old English Gothic Pixel", Georgia, serif;
+  /* as big as it can be and still fit the screen on both axes */
+  font-size: min(25vw, 27vh);
+  white-space: nowrap;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  text-align: center;
+  /* over the page rather than over black, so the letters need their own edge */
+  text-shadow:
+    0 0 24px rgba(255, 16, 16, 0.6),
+    2px 2px 0 #000,
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000;
+  animation: priest-flash 0.4s steps(1, end) infinite;
+}
+
+@keyframes priest-flash {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.08; }
+}
+
+/* the flash is the point, but not at the cost of anyone it could hurt */
+@media (prefers-reduced-motion: reduce) {
+  .priest-shout {
+    animation: none;
+  }
+}
+
+/* a small square dialog, not the wide photo frame it borrows its chrome from */
+#prototypeWindow .photo-window-frame {
+  width: min(360px, 90vw);
+}
+
+/* she speaks: her head at native size, the line beside it */
+.atrocity-say {
+  padding: 12px;
+}
+
+.prototype-say {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px 16px;
+}
+
+.prototype-gif {
+  display: block;
+  flex: none;
+  width: 100px;
+  image-rendering: pixelated;
+}
+
+.prototype-caption {
+  padding: 0;
+  text-align: left;
+}
+
+
+/* a quoted passage, wherever one is pinned up. */
+.site-quote {
+  margin: 0;
+  padding: 0 0 0 12px;
+  border-left: 3px solid var(--site-red);
+  color: var(--site-ink);
+  line-height: 1.6;
+}
+
+.site-quote p {
+  margin: 0 0 0.8em;
+}
+
+.site-quote cite {
+  color: var(--site-ink-dim);
+  font-size: 0.8rem;
+  font-style: normal;
+}
+
+/* ---------------------------------------------------------------------------
+   the about page. shared rather than inline because the homepage renders the
+   same markup inside a window, and inline styles would not reach it.
+   --------------------------------------------------------------------------- */
+  .about-row {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .about-row > .panel {
+    margin-bottom: 0;
+  }
+
+  /* the picture column runs down the left */
+  .about-left {
+    flex: 0 0 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-self: flex-start;
+  }
+
+  /* photostrip: framed strip, dark gutters between the photos. not a panel. */
+  .photostrip {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+    background: var(--site-frame-dark);
+    border: 2px solid;
+    border-color: var(--site-bevel-lo) var(--site-bevel-hi) var(--site-bevel-hi)
+      var(--site-bevel-lo);
+    box-shadow: var(--site-drop);
+  }
+
+  .photo-flip {
+    position: relative;
+  }
+
+  .photostrip img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border: 1px solid var(--site-gold);
+  }
+
+  /* the second photo sits on top and is cut to, not faded to */
+  .photo-flip img + img {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+
+  .photo-flip.flash img + img {
+    opacity: 1;
+  }
+
+  .photo-caption {
+    margin: 0;
+    text-align: center;
+    font-size: 0.5rem;
+    line-height: 1.3;
+    color: var(--site-bevel-hi);
+  }
+
+  /* two photos side by side, filling the gap under the about text */
+  .photostrip img.crop-right {
+    object-position: 60% center;
+  }
+
+  .about-photo-pair {
+    display: flex;
+    gap: 10px;
+  }
+
+  .about-photo-pair .photostrip {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  /* these two sit side by side, so their captions must not wrap */
+  .about-photo-pair .photo-caption {
+    white-space: nowrap;
+  }
+
+  .about-col {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .about-col > .panel {
+    margin-bottom: 0;
+  }
+
+  /* the greeting is the page's title now, on its own line */
+  .about-greeting {
+    margin: 0;
+    font-family: "Old English Gothic Pixel", Georgia, serif;
+    font-weight: normal;
+    font-size: 2.8rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    color: var(--site-red-bright);
+    -webkit-text-stroke: 2px #000;
+    paint-order: stroke fill;
+  }
+
+  /* the old name, tucked up into the tail of the y */
+  .panel-body p.former-name {
+    margin: -0.35em 0 10px;
+    font-size: 0.8rem;
+    font-style: italic;
+  }
+
+  /* the angels: blue, with a shine sweeping across the letters */
+  .angels {
+    color: #6fc3ff;
+    background: linear-gradient(
+      100deg,
+      #6fc3ff 0%,
+      #6fc3ff 40%,
+      #ffffff 50%,
+      #6fc3ff 60%,
+      #6fc3ff 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: angel-shine 2.6s linear infinite;
+  }
+
+  @keyframes angel-shine {
+    from {
+      background-position: 150% 0;
+    }
+    to {
+      background-position: -150% 0;
+    }
+  }
+
+  /* a small sign held up mid-sentence, not a headline */
+  .panel-body p.end-sign {
+    display: table;
+    margin: 6px auto;
+    padding: 3px 10px;
+    border: 1px solid var(--site-bevel-lo);
+    background: var(--site-frame-dark);
+    color: #fff;
+    font-size: inherit;
+    letter-spacing: 0.08em;
+    text-align: center;
+  }
+
+  /* salvation, glowing purple */
+  .salvation {
+    color: #c68cff;
+    animation: salvation-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes salvation-glow {
+    0%,
+    100% {
+      text-shadow: 0 0 2px #7b3fbf;
+    }
+    50% {
+      text-shadow: 0 0 9px #c68cff, 0 0 18px #7b3fbf;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .angels,
+    .salvation {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .about-row {
+      flex-wrap: wrap;
+    }
+    .about-left {
+      flex: 1 1 100%;
+    }
+  }

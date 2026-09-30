@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="a shrine to divine machinery. click the gate to enter." />
+    <meta property="og:title" content="Cyborg Cathedral" />
+    <meta property="og:description" content="a shrine to divine machinery. click the gate to enter." />
+    <meta property="og:image" content="https://cyborg-cathedral.neocities.org/assets/shared/og.jpg" />
+    <meta property="og:url" content="https://cyborg-cathedral.neocities.org/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>enter</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="cursor.css" />
+    <style>
+      body {
+        background: url("assets/shared/greytile01.jpg") repeat;
+        display: flex;
+        min-height: 100vh;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .gate-page {
+        text-align: center;
+        color: var(--site-ink);
+      }
+
+      /* red: this is chrome, not something you click. --site-ink is almost
+         black and vanishes into the tile. */
+      .gate-ask {
+        margin: 18px 0 0;
+        font-family: "Old English Gothic Pixel", Georgia, serif;
+        font-size: 34px;
+        color: var(--site-red-bright);
+        text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.85);
+      }
+
+
+      #gate {
+        display: block;
+        width: min(74vh, 86vw);
+        aspect-ratio: 1 / 1;
+        margin: 0 auto;
+        padding: 0;
+        border: 0;
+        background: url("assets/gate-sheet.png") 0% 0% / 400% 200% no-repeat;
+        cursor: pointer;
+      }
+
+      /* first thing on the page, above the gate: it is no use as a warning
+         underneath the thing it is warning about */
+      /* a band, not a box. anything with a bevel and a shadow reads as a
+         button, and a warning must not look like something to press. black
+         ground and yellow type is the one combination nobody mistakes for a
+         control. */
+      .gate-warning {
+        /* the gate page is centred and only as wide as the gate, so the band
+           has to leave that box to run the whole window */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        margin: 0;
+        padding: 5px 10px;
+        background: #0c0c0c;
+        border-top: 2px solid #e8c022;
+        border-bottom: 2px solid #e8c022;
+        font-family: "Courier New", monospace;
+        font-size: 13px;
+        font-weight: bold;
+        color: #e8c022;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="gate-page">
+      <p class="gate-warning" role="alert">
+        !! WARNING !! this site contains flashing images
+      </p>
+
+      <button id="gate" type="button" aria-label="click to enter"></button>
+
+      <p class="gate-ask">click to enter</p>
+    </div>
+
+    <script src="cursor.js"></script>
+    <script src="gate.js?v=2"></script>
+    <script src="jsonp.js?v=2"></script>
+    <script src="track.js?v=2"></script>
+  </body>
+</html>

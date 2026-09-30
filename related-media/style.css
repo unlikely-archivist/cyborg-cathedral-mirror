@@ -1,0 +1,121 @@
+.tool-main {
+  order: 0; /* site-wide `main { order: 2 }` is for the home page's column layout */
+  width: 100%;
+}
+
+/* one category per page now, so it gets the whole column rather than a third
+   of a three-up grid */
+#artifactCategories {
+  margin-top: 10px;
+}
+
+/* each column stacks its own categories, so a short list is followed
+   immediately by the next one instead of waiting on a shared row. */
+.artifact-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* the sidebar jumps straight to a category, so leave it clear of the top */
+.artifact-category {
+  scroll-margin-top: 12px;
+}
+
+.artifact-category .panel-body {
+  padding: 10px;
+}
+
+.artifact-empty {
+  margin: 0;
+  color: var(--site-ink-dim);
+  font-size: 0.72rem;
+}
+
+.artifact-subcategory-title {
+  margin: 14px 0 8px;
+  color: var(--site-ink);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.artifact-subcategory-title:first-child {
+  margin-top: 0;
+}
+
+.artifact-list {
+  margin: 0;
+  padding-left: 18px;
+  list-style: square;
+  color: var(--site-ink);
+}
+
+.artifact-list li {
+  margin-bottom: 5px;
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.artifact-author {
+  color: var(--site-ink-dim);
+  font-size: 0.66rem;
+}
+
+@media only screen and (max-width: 800px) {
+}
+
+/* the ask, under the category columns. The bar is red because red is chrome
+   here; the only green is the guestbook link, because that is the thing you
+   can act on. */
+.artifact-ask {
+  margin-top: 10px;
+}
+
+.artifact-ask .panel-body {
+  padding: 10px;
+}
+
+.artifact-ask p {
+  margin: 0;
+}
+
+/* the images category: the pictures themselves, one at a time, whole. never
+   cropped to a tile - the shape of a picture is part of it. */
+.image-wall {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+.image-wall img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--site-bevel-lo);
+}
+
+/* the art category: the works, captioned, at whatever shape they are */
+.art-wall {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 14px;
+  align-items: start;
+}
+
+.art-wall figure {
+  margin: 0;
+}
+
+.art-wall img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--site-bevel-lo);
+}
+
+.art-wall figcaption {
+  margin-top: 5px;
+  line-height: 1.35;
+}

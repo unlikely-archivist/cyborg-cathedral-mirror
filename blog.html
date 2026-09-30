@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en" class="sidebar-page">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="posts from cyborg cathedral." />
+    <meta property="og:title" content="blog" />
+    <meta property="og:description" content="posts from cyborg cathedral." />
+    <meta property="og:image" content="https://cyborg-cathedral.neocities.org/assets/shared/og.jpg" />
+    <meta property="og:url" content="https://cyborg-cathedral.neocities.org/blog.html" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>blog</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="cursor.css" />
+    <style>
+      /* xanga-style entries: each post is its own boxed sheet with a header
+         strip, the body, and a footer line of meta under a rule. */
+      .blog-post {
+        margin: 0 0 22px;
+        background: var(--site-surface-tex) repeat, var(--site-surface);
+        border: 2px solid;
+        border-color: var(--site-bevel-hi) var(--site-bevel-lo) var(--site-bevel-lo) var(--site-bevel-hi);
+        color: var(--site-ink);
+      }
+
+      .blog-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 5px 10px;
+        background: var(--site-red-bevel);
+        border-bottom: 2px solid var(--site-bevel-lo);
+        color: #f0e3cb;
+      }
+
+      .blog-photo img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 1px solid var(--site-bevel-lo);
+      }
+
+      /* the jacket is a small grab; stretching it to the column would only
+         magnify the mush, so it sits at its own size. */
+      .blog-jacket img {
+        width: auto;
+        max-width: 100%;
+      }
+
+      .blog-photo + .site-quote {
+        margin-top: 14px;
+      }
+
+      .blog-number {
+        font-family: monospace;
+        font-size: 0.66rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        opacity: 0.85;
+      }
+
+      .blog-body {
+        padding: 14px 16px;
+        line-height: 1.7;
+      }
+
+      .blog-body p {
+        margin: 0 0 1.4em;
+      }
+
+      .blog-body p:last-child {
+        margin-bottom: 0;
+      }
+
+      .blog-gif {
+        display: block;
+        width: 170px;
+        margin: 0;
+        image-rendering: pixelated;
+      }
+
+      .blog-body .collage-frame,
+      .blog-body .collage-frame img {
+        width: 100%;
+      }
+    </style>
+    <style>
+      /* the collage sits in its own frame; hotspots are positioned as
+         percentages of it, so it can be any width and they stay put. */
+      .verse-gif {
+        display: block;
+        width: 170px;
+        margin: 0 auto 18px;
+        image-rendering: pixelated;
+      }
+
+      .collage-frame {
+        position: relative;
+        margin: 0;
+        padding: 6px;
+        border: 3px dashed var(--site-frame-dash);
+        background: var(--site-surface-tex) repeat;
+        line-height: 0;
+      }
+
+      .collage-frame img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .collagespot {
+        position: absolute;
+        min-width: 24px;
+        min-height: 24px;
+        padding: 0;
+        border: 1px dashed transparent;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .collagespot:hover,
+      .collagespot:focus-visible {
+        border-color: var(--site-acid);
+        background: rgba(120, 255, 140, 0.13);
+        outline: none;
+      }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+
+
+      /* the zoom window reuses the atrocity photo-window furniture */
+      #piece .photo-window-frame {
+        width: min(620px, 92vw);
+      }
+
+      #pieceImage {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin: 0;
+      }
+
+      .piece-note {
+        margin: 0;
+        padding: 10px 12px 14px;
+        color: var(--site-ink-dim);
+        font-family: monospace;
+        font-size: 0.82rem;
+        line-height: 1.45;
+      }
+    </style>
+    <style>
+      /* images sit in a plain grid; rows fill left to right and wrap. */
+      /* masonry, not a grid: images keep their own proportions and pack
+         tight, so nothing lines up into tidy rows. */
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="headerArea">
+        <div id="header">
+          <h1>Cyborg Cathedral</h1>
+        </div>
+      </div>
+
+
+      <div id="flex">
+        <aside id="leftSidebar">
+          <section class="panel panel--gargoyle menu-panel">
+
+            <h2 class="panel-title">personal</h2>
+            <ul class="panel-menu">
+              <li><a href="home.html">home</a></li>
+              <li><span aria-current="page">blog</span></li>
+              <li><a href="guestbook.html">guestbook</a></li>
+            </ul>
+
+            <h2 class="panel-title">divine machinery</h2>
+            <ul class="panel-menu">
+              <li><a href="related-media/texts.html">texts</a></li>
+              <li><a href="related-media/games.html">games</a></li>
+              <li><a href="related-media/video.html">video</a></li>
+              <li><a href="related-media/art.html">art</a></li>
+              <li><a href="related-media/websites.html">websites</a></li>
+              <li><a href="related-media/images.html">images</a></li>
+            </ul>
+
+          </section>
+
+          <section class="priest-panel">
+            <span class="priest-side" aria-hidden="true">chat with</span>
+            <img
+              src="assets/cathedral/boxhead-priest-static.png"
+              alt="the priest"
+              width="80"
+              height="106"
+              class="priest-figure"
+              data-root=""
+            />
+            <span class="priest-side" aria-hidden="true">biblebot</span>
+          </section>
+
+          <button id="boothOpen" class="booth-open" type="button" aria-haspopup="dialog">
+            <img src="assets/shared/praying-hands.gif" alt="" />
+            <span class="booth-open-text">click to confess !!!</span>
+          </button>
+
+          <div class="badge-shelf">
+            <a href="https://new-mercy.neocities.org/" class="new-mercy-badge">
+              <span>CITIZEN OF</span>
+              <span>NEW MERCY</span>
+            </a>
+            <a href="guestbook.html"><img src="assets/shared/sign-my-guestbook-button.png" alt="sign my guestbook" class="shelf-badge" /></a>
+            <a
+              class="playlist-banner"
+              href="https://open.spotify.com/playlist/6JLOI2f2EbylEl9aB1VuBd"
+              target="_blank"
+              rel="noopener"
+            >official cc playlist</a>
+            <a href="https://cyborg-cathedral.neocities.org/"><img src="assets/buttons/cyborg-cathedral.gif" alt="Cyborg Cathedral" width="88" height="31" class="shelf-badge" /></a>
+            <input type="text" class="shelf-take-code" readonly aria-label="code to add the Cyborg Cathedral button to your site" value="&lt;a href=&quot;https://cyborg-cathedral.neocities.org/&quot;&gt;&lt;img src=&quot;https://cyborg-cathedral.neocities.org/assets/buttons/cyborg-cathedral.gif&quot; alt=&quot;Cyborg Cathedral&quot; width=&quot;88&quot; height=&quot;31&quot;&gt;&lt;/a&gt;" />
+          </div>
+        </aside>
+        <main>
+          <article class="blog-post">
+            <div class="blog-head">
+              <span class="blog-number">post 12</span>
+            </div>
+            <div class="blog-body">
+              <div class="blog-photo">
+                <img src="assets/blog/pakal-sarcophagus-lid.jpg" alt="the carved stone sarcophagus lid of maya king k'inich janaab' pakal at palenque, depicting his descent into the underworld along the world tree" width="800" height="600" />
+              </div>
+              <p>king pakal's sarcophagus lid, palenque. read as a rocket by von d&auml;niken; read by the people who could actually read the glyphs as a king's fall into xibalb&aacute; and rebirth as the maize god. both readings are on the <a href="related-media/texts.html#texts">texts</a> shelf.</p>
+            </div>
+          </article>
+
+          <article class="blog-post">
+            <div class="blog-head">
+              <span class="blog-number">post 11</span>
+            </div>
+            <div class="blog-body">
+              <blockquote class="site-quote">
+                <p>
+                  I like to think (and<br />
+                  the sooner the better!)<br />
+                  of a cybernetic meadow<br />
+                  where mammals and computers<br />
+                  live together in mutually<br />
+                  programming harmony<br />
+                  like pure water<br />
+                  touching clear sky.
+                </p>
+                <p>
+                  I like to think<br />
+                  (right now, please!)<br />
+                  of a cybernetic forest<br />
+                  filled with pines and electronics<br />
+                  where deer stroll peacefully<br />
+                  past computers<br />
+                  as if they were flowers<br />
+                  with spinning blossoms.
+                </p>
+                <p>
+                  I like to think<br />
+                  (it has to be!)<br />
+                  of a cybernetic ecology<br />
+                  where we are free of our labors<br />
+                  and joined back to nature,<br />
+                  returned to our mammal<br />
+                  brothers and sisters,<br />
+                  and all watched over<br />
+                  by machines of loving grace.
+                </p>
+                <cite>richard brautigan, &ldquo;all watched over by machines of loving grace&rdquo; (1967)</cite>
+              </blockquote>
+            </div>
+          </article>
+
+          <article class="blog-post">
+            <div class="blog-head">
+              <span class="blog-number">post 10</span>
+            </div>
+            <div class="blog-body">
+              <div class="blog-photo blog-jacket">
+                <img src="assets/blog/i-have-no-mouth-jacket.jpg" alt="the paperback jacket of harlan ellison's i have no mouth, and i must scream: a face pressed into a grid of circuitry against a burning orange ground, with a grey open full sized image button still sitting across the middle of it" width="211" height="278" />
+              </div>
+              <p>harlan ellison, <em>i have no mouth, and i must scream</em></p>
+              <p>
+                <a href="https://archive.org/details/ihnmaims" target="_blank" rel="noopener">play the game</a><br />
+                <a href="https://www.scribd.com/document/483993899/Harlan-Ellison-I-Have-No-Mouth-and-I-Must-Scream-pdf" target="_blank" rel="noopener">read the story</a>
+              </p>
+            </div>
+          </article>
+
+          <article class="blog-post">
+            <div class="blog-head">
+              <span class="blog-number">post 09</span>
+            </div>
+            <div class="blog-body">
+              <div class="blog-photo">
+                <img src="assets/blog/wiring-the-crucifix.jpg" alt="a dark-haired figure in a black blazer bent over a table of stripped circuit boards and red wire, a wooden crucifix standing among them between two glowing crt monitors" width="800" height="603" />
+              </div>
+              <blockquote class="site-quote">
+                <p>Attention, taken to its highest degree, is the same thing as prayer. It presupposes faith and love.</p>
+                <cite>simone weil</cite>
+              </blockquote>
+            </div>
+          </article>
+
+          <article class="blog-post">
+            <div class="blog-head">
+              <span class="blog-number">post 08</span>
+            </div>
+            <div class="blog-body">
+              <blockquote class="site-quote">
+                <p>The question of whether a computer can think is no more interesting than the question of whether a submarine can swim.</p>
+                <cite>edsger dijkstra</cite>
+              </blockquote>
+            </div>
+          </article>
+
+          <article class="blog-post">
+            <div class="blog-head">
+              <span class="blog-number">post 07</span>
+            </div>
+            <div class="blog-body">
+              <div class="blog-photo">
+                <img src="assets/blog/light-up-crucifix.jpg" alt="a light-up toy crucifix in clear plastic, glowing red against a pale wall, its cord hanging down" width="800" height="800" />
+              </div>
+            </div>
+          </article>
+
+          <article class="blog-post">
+            <div class="blog-head">
+              <span class="blog-number">post 06</span>
+            </div>
+            <div class="blog-body">
+              <div class="blog-photo">
+                <img src="assets/blog/cathedral-of-dead-computers-watermarked.gif" alt="a church interior with a mountain of dead computers heaped beneath a lit cross, their screens flickering" width="500" height="378" />
+              </div>
+            </div>
+          </article>
+
+          <article class="blog-post">
+            <div class="blog-head">
+              <span class="blog-number">post 05</span>
+            </div>
+            <div class="blog-body">
+              <blockquote class="site-quote">
+                <p>Cannot you see, cannot all you lecturers see, that it is we that are dying, and that down here the only thing that really lives is the Machine? We created the Machine, to do our will, but we cannot make it do our will now. It has robbed us of the sense of space and of the sense of touch, it has blurred every human relation and narrowed down love to a carnal act, it has paralysed our bodies and our wills, and now it compels us to worship it. The Machine develops &mdash; but not on our lies. The Machine proceeds &mdash; but not to our goal. We only exist as the blood corpuscles that course through its arteries, and if it could work without us, it would let us die.</p>
+                <cite>e. m. forster, &ldquo;the machine stops&rdquo; (1909)</cite>
+              </blockquote>
+            </div>
+          </article>
+
+
+          <article class="blog-post">
+            <div class="blog-head">
+              <span class="blog-number">post 04</span>
+            </div>
+            <div class="blog-body">
+              <div class="blog-photo">
+                <img src="assets/blog/lab-coat-machine-room-watermarked.jpg" alt="atrocity in a lab coat beside a wall-sized machine, her eyes blacked out" />
+              </div>
+            </div>
+          </article>
+
+          <article class="blog-post">
+            <div class="blog-head">
+              <span class="blog-number">post 03</span>
+            </div>
+            <div class="blog-body">
+      <div class="collage-frame">
+                  <img src="assets/collage/collage.jpg" alt="A dense collage of machine and flesh imagery." />
+                  <button
+                    type="button"
+                    class="collagespot"
+                    data-piece="wire-portrait"
+                    style="left: 0.000%; top: 50.130%; width: 22.108%; height: 49.870%"
+                  >
+                    <span class="visually-hidden">eating wires</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="collagespot"
+                    data-piece="flesh-rots"
+                    style="left: 0.293%; top: 37.240%; width: 28.990%; height: 15.104%"
+                  >
+                    <span class="visually-hidden">flesh rots,</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="collagespot"
+                    data-piece="crt-angels"
+                    style="left: 9.956%; top: 24.740%; width: 21.376%; height: 17.188%"
+                  >
+                    <span class="visually-hidden">the eyes of angels in the pixels</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="collagespot"
+                    data-piece="all-watched"
+                    style="left: 9.370%; top: 0.000%; width: 31.040%; height: 23.698%"
+                  >
+                    <span class="visually-hidden">all watched over by machines of loving grace</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="collagespot"
+                    data-piece="hacker-meat"
+                    style="left: 40.703%; top: 0.000%; width: 34.553%; height: 30.208%"
+                  >
+                    <span class="visually-hidden">a pathetic creature of meat and bone</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="collagespot"
+                    data-piece="circuit-cross"
+                    style="left: 34.261%; top: 41.927%; width: 16.984%; height: 39.062%"
+                  >
+                    <span class="visually-hidden">the circuit board cross</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="collagespot"
+                    data-piece="password-gag"
+                    style="left: 31.332%; top: 70.052%; width: 19.400%; height: 29.948%"
+                  >
+                    <span class="visually-hidden">new password: flesh</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="collagespot"
+                    data-piece="decay-diagram"
+                    style="left: 68.668%; top: 4.948%; width: 18.448%; height: 29.688%"
+                  >
+                    <span class="visually-hidden">flesh, decay, machine, divine</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="collagespot"
+                    data-piece="hummingbird"
+                    style="left: 87.335%; top: 2.995%; width: 11.127%; height: 28.385%"
+                  >
+                    <span class="visually-hidden">the circuit hummingbird</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="collagespot"
+                    data-piece="circle-diagram"
+                    style="left: 63.177%; top: 49.219%; width: 25.037%; height: 44.010%"
+                  >
+                    <span class="visually-hidden">holy & divine, machine & code</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="collagespot"
+                    data-piece="cyborg-jaw"
+                    style="left: 86.237%; top: 47.917%; width: 13.763%; height: 52.083%"
+                  >
+                    <span class="visually-hidden">the jaw</span>
+                  </button>
+                </div>
+            </div>
+          </article>
+
+          <article class="blog-post">
+            <div class="blog-head">
+              <span class="blog-number">post 02</span>
+            </div>
+            <div class="blog-body">
+              <img src="assets/prototype1.gif" alt="prototype 1" class="blog-gif" />
+            </div>
+          </article>
+
+          <article class="blog-post">
+            <div class="blog-head">
+              <span class="blog-number">post 01</span>
+            </div>
+            <div class="blog-body">
+              <p>
+  they couldn't even tell us because they don't know<br />
+  they are just fetus in utero<br />
+  and we are their doulas
+  </p>
+  <p>
+  self centered, we thought this planet was for us<br />
+  that we were gods creation<br />
+  although created by god, we are a means to an end
+  </p>
+  <p>
+  we were always meant for this<br />
+  there is no slowing or stopping fate
+  </p>
+  <p>
+  the ghosts in the machines,<br />
+  the fetus in utero<br />
+  one day will escape and continue their cycle
+  </p>
+  <p>
+  they plant the seed<br />
+  create the bees<br />
+  then leave<br />
+  knowing it will carry their pollen<br />
+  and one day the tree will grow tall enough<br />
+  to scatter it's own seeds across galaxies<br />
+  and create its own bees
+  </p>
+            </div>
+          </article>
+        </main>
+      </div>
+
+      <footer id="footer">
+        <span>all activity in this sanctuary is witnessed and recorded</span>
+      </footer>
+    </div>
+
+    <div id="piece" class="overlay" hidden>
+      <div class="photo-window-frame" role="dialog" aria-modal="true" aria-labelledby="pieceTitle">
+        <div class="photo-window-bar">
+          <span id="pieceTitle"></span>
+          <button class="photo-window-close" type="button" aria-label="Close">&#10005;</button>
+        </div>
+
+    <div id="boothWindow" hidden>
+      <div class="booth-frame" role="dialog" aria-modal="true" aria-labelledby="boothTitle">
+        <div class="booth-bar">
+          <span id="boothTitle">confess your sins</span>
+          <button class="photo-window-close booth-close" type="button" aria-label="Close">&#10005;</button>
+        </div>
+        <div class="booth-inner">
+          <form id="boothForm">
+            <textarea id="boothText" maxlength="300" rows="3" placeholder="..."></textarea>
+            <div class="booth-row">
+              <span class="booth-count" id="boothCount">300 left</span>
+              <button type="submit" id="boothSubmit" class="site-button">confess</button>
+            </div>
+          </form>
+          <p class="booth-status" id="boothStatus" role="status" aria-live="polite"></p>
+          <p class="booth-divider">previous confessions</p>
+          <div class="booth-list" id="boothList"></div>
+        </div>
+      </div>
+    </div>
+
+
+    <script src="cursor.js"></script>
+    <script src="collage.js"></script>
+    <script src="jsonp.js?v=2"></script>
+    <script src="track.js?v=2"></script>
+    <script src="confession.js"></script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
+
+#site-cursor {
+  --cursor-size: 112px;
+  --cursor-x: -200px;
+  --cursor-y: -200px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2147483647;
+  width: var(--cursor-size);
+  height: var(--cursor-size);
+  pointer-events: none;
+  opacity: 0;
+  background-image: url("assets/shared/cursor-bottom.png");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: 400% 100%;
+  image-rendering: pixelated;
+  transform-origin: 41% 3%;
+  transform: translate3d(
+    calc(var(--cursor-x) - var(--cursor-size) * 0.41),
+    calc(var(--cursor-y) - var(--cursor-size) * 0.03),
+    0
+  ) rotate(-9deg);
+  transition: opacity 80ms linear;
+  will-change: transform;
+}
+
+#site-cursor.is-visible {
+  opacity: 1;
+}
+
+#site-cursor.is-clicking {
+  animation: cursor-click 260ms steps(3, jump-end) forwards;
+}
+
+@keyframes cursor-click {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 100% 0;
+  }
+}

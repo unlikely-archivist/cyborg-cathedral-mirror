@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en" class="sidebar-page">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="grotesques &amp; gargoyles at cyborg cathedral." />
+    <meta property="og:title" content="grotesques &amp; gargoyles" />
+    <meta property="og:description" content="grotesques &amp; gargoyles at cyborg cathedral." />
+    <meta property="og:image" content="https://cyborg-cathedral.neocities.org/assets/shared/og.jpg" />
+    <meta property="og:url" content="https://cyborg-cathedral.neocities.org/grotesques-and-gargoyles.html" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>grotesques &amp; gargoyles</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="cursor.css" />
+    <style>
+      /* one tile per grotesque; rows fill left to right and wrap. */
+      .grotesque-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 9px;
+        padding: 9px;
+      }
+
+      .grotesque-grid a {
+        display: block;
+        text-decoration: none;
+      }
+
+      /* every tile is the same square, whatever shape the photo is */
+      .grotesque-grid img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border: 2px solid;
+        border-color: var(--site-bevel-lo) var(--site-bevel-hi) var(--site-bevel-hi) var(--site-bevel-lo);
+      }
+
+      .adopt-shelf {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        padding: 9px;
+      }
+
+      .adoptable {
+        display: flex;
+        flex: 0 1 260px;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        margin: 0;
+      }
+
+      .adoptable img {
+        width: 74px;
+        height: 96px;
+        image-rendering: pixelated;
+      }
+
+      .adoptable figcaption {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 5px;
+        width: 100%;
+      }
+
+      .adopt-code {
+        width: 100%;
+        padding: 4px;
+        border: 1px solid var(--site-bevel-lo);
+        background: var(--site-surface);
+        color: var(--site-ink);
+        font-family: monospace;
+        font-size: 0.6rem;
+        resize: vertical;
+      }
+
+      .adopt-status {
+        color: var(--site-ink-dim);
+        font-size: 0.65rem;
+        min-height: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="headerArea">
+        <div id="header">
+          <h1>Cyborg Cathedral</h1>
+        </div>
+      </div>
+
+
+      <div id="flex">
+        <aside id="leftSidebar">
+          <section class="panel panel--gargoyle menu-panel">
+
+            <h2 class="panel-title">personal</h2>
+            <ul class="panel-menu">
+              <li><a href="home.html">home</a></li>
+              <li><a href="blog.html">blog</a></li>
+              <li><a href="guestbook.html">guestbook</a></li>
+            </ul>
+
+            <h2 class="panel-title">divine machinery</h2>
+            <ul class="panel-menu">
+              <li><a href="related-media/texts.html">texts</a></li>
+              <li><a href="related-media/games.html">games</a></li>
+              <li><a href="related-media/video.html">video</a></li>
+              <li><a href="related-media/art.html">art</a></li>
+              <li><a href="related-media/websites.html">websites</a></li>
+              <li><a href="related-media/images.html">images</a></li>
+            </ul>
+
+          </section>
+
+          <section class="priest-panel">
+            <span class="priest-side" aria-hidden="true">chat with</span>
+            <img
+              src="assets/cathedral/boxhead-priest-static.png"
+              alt="the priest"
+              width="80"
+              height="106"
+              class="priest-figure"
+              data-root=""
+            />
+            <span class="priest-side" aria-hidden="true">biblebot</span>
+          </section>
+
+          <button id="boothOpen" class="booth-open" type="button" aria-haspopup="dialog">
+            <img src="assets/shared/praying-hands.gif" alt="" />
+            <span class="booth-open-text">click to confess !!!</span>
+          </button>
+
+          <div class="badge-shelf">
+            <a href="https://new-mercy.neocities.org/" class="new-mercy-badge">
+              <span>CITIZEN OF</span>
+              <span>NEW MERCY</span>
+            </a>
+            <a href="guestbook.html"><img src="assets/shared/sign-my-guestbook-button.png" alt="sign my guestbook" class="shelf-badge" /></a>
+            <a
+              class="playlist-banner"
+              href="https://open.spotify.com/playlist/6JLOI2f2EbylEl9aB1VuBd"
+              target="_blank"
+              rel="noopener"
+            >official cc playlist</a>
+            <a href="https://cyborg-cathedral.neocities.org/"><img src="assets/buttons/cyborg-cathedral.gif" alt="Cyborg Cathedral" width="88" height="31" class="shelf-badge" /></a>
+            <input type="text" class="shelf-take-code" readonly aria-label="code to add the Cyborg Cathedral button to your site" value="&lt;a href=&quot;https://cyborg-cathedral.neocities.org/&quot;&gt;&lt;img src=&quot;https://cyborg-cathedral.neocities.org/assets/buttons/cyborg-cathedral.gif&quot; alt=&quot;Cyborg Cathedral&quot; width=&quot;88&quot; height=&quot;31&quot;&gt;&lt;/a&gt;" />
+          </div>
+        </aside>
+
+        <main>
+          <section class="panel">
+            <h2 class="panel-title">grotesques &amp; gargoyles</h2>
+            <div class="grotesque-grid">
+              <a
+                href="https://www.atlasobscura.com/places/the-vampire-rabbit-of-newcastle-newcastle-upon-tyne-england"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="assets/grotesques/vampire-rabbit-newcastle.jpg"
+                  alt="the vampire rabbit of Newcastle"
+                  width="585"
+                  height="390"
+                />
+              </a>
+              <a
+                href="https://curiousrambler.com/gargoyles-grotesques-and-hunky-punks-ancient-and-modern/"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="assets/grotesques/paisley-alien-gargoyle.webp"
+                  alt="the alien gargoyle of Paisley Abbey"
+                  width="1000"
+                  height="625"
+                />
+              </a>
+            </div>
+          </section>
+
+          <section class="panel">
+            <h2 class="panel-title">adopt me!</h2>
+            <div class="adopt-shelf">
+              <figure class="adoptable">
+                <img src="assets/adoptables/gargoyle.gif" alt="stone gargoyle" width="74" height="96" />
+                <figcaption>
+                  <textarea class="adopt-code" readonly rows="3">&lt;a href=&quot;https://cyborg-cathedral.neocities.org/grotesques-and-gargoyles.html&quot;&gt;&lt;img src=&quot;https://cyborg-cathedral.neocities.org/assets/adoptables/gargoyle.gif&quot; alt=&quot;stone gargoyle&quot; width=&quot;74&quot; height=&quot;96&quot;&gt;&lt;/a&gt;</textarea>
+                  <button type="button" class="site-button adopt-copy" data-code="&lt;a href=&quot;https://cyborg-cathedral.neocities.org/grotesques-and-gargoyles.html&quot;&gt;&lt;img src=&quot;https://cyborg-cathedral.neocities.org/assets/adoptables/gargoyle.gif&quot; alt=&quot;stone gargoyle&quot; width=&quot;74&quot; height=&quot;96&quot;&gt;&lt;/a&gt;">copy</button>
+                  <span class="adopt-status" role="status" aria-live="polite"></span>
+                </figcaption>
+              </figure>
+            </div>
+          </section>
+        </main>
+      </div>
+
+      <footer id="footer">
+        <span>all activity in this sanctuary is witnessed and recorded</span>
+      </footer>
+    </div>
+
+
+    <div id="boothWindow" hidden>
+      <div class="booth-frame" role="dialog" aria-modal="true" aria-labelledby="boothTitle">
+        <div class="booth-bar">
+          <span id="boothTitle">confess your sins</span>
+          <button class="photo-window-close booth-close" type="button" aria-label="Close">&#10005;</button>
+        </div>
+        <div class="booth-inner">
+          <form id="boothForm">
+            <textarea id="boothText" maxlength="300" rows="3" placeholder="..."></textarea>
+            <div class="booth-row">
+              <span class="booth-count" id="boothCount">300 left</span>
+              <button type="submit" id="boothSubmit" class="site-button">confess</button>
+            </div>
+          </form>
+          <p class="booth-status" id="boothStatus" role="status" aria-live="polite"></p>
+          <p class="booth-divider">previous confessions</p>
+          <div class="booth-list" id="boothList"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="cursor.js"></script>
+    <script src="adopt.js"></script>
+    <script src="jsonp.js?v=2"></script>
+    <script src="track.js?v=2"></script>
+    <script src="confession.js"></script>
+  </body>
+</html>
