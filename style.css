@@ -13,10 +13,10 @@
   --site-width: 900px;
 
   /* ground — the big picture behind everything */
-  --site-board: url("/assets/background/circuit-board-bg.png");
-  --site-wallpaper: url("/assets/shared/greytile01.jpg");
-  --site-banner: url("/assets/shared/cyborg-cathedral-banner.png");
-  --site-cross: url("/assets/shared/cross-silver.gif");
+  --site-board: url("assets/background/circuit-board-bg.png");
+  --site-wallpaper: url("assets/shared/greytile01.jpg");
+  --site-banner: url("assets/shared/cyborg-cathedral-banner.png");
+  --site-cross: url("assets/shared/cross-silver.gif");
   --site-board-edge: #1d3a2f;
 
   /* surface + frames */
